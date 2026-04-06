@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Unit Converter Agent</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 860px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      color: #1a1a1a;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+    }
+
+    h2 {
+      margin-top: 2rem;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: .3rem;
+    }
+
+    pre {
+      background: #f5f5f5;
+      padding: 1rem;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: .85rem;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: .9rem;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: .4rem .75rem;
+      text-align: left;
+    }
+
+    th {
+      background: #f0f0f0;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #0070f3;
+      color: #fff;
+      border-radius: 4px;
+      padding: .15rem .5rem;
+      font-size: .75rem;
+      margin-right: .3rem;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>🔁 Unit Converter Agent</h1>
+  <p>An AGINT-compliant unit conversion service. <strong>No API key required.</strong> All conversions run locally in
+    the Worker.</p>
+
+  <h2>Tools</h2>
+  <table>
+    <tr>
+      <th>Tool</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><code>convert_length</code></td>
+      <td>mm, cm, m, km, in, ft, yd, mi, nmi</td>
+    </tr>
+    <tr>
+      <td><code>convert_weight</code></td>
+      <td>mg, g, kg, t, oz, lb, st, short_ton</td>
+    </tr>
+    <tr>
+      <td><code>convert_temperature</code></td>
+      <td>celsius, fahrenheit, kelvin, rankine</td>
+    </tr>
+    <tr>
+      <td><code>convert_currency</code></td>
+      <td>20 currencies — fixed reference rates</td>
+    </tr>
+    <tr>
+      <td><code>convert_timezone</code></td>
+      <td>Any IANA timezone pair</td>
+    </tr>
+    <tr>
+      <td><code>list_units</code></td>
+      <td>List all supported units per category</td>
+    </tr>
+  </table>
+
+  <h2>Endpoints</h2>
+  <ul>
+    <li><a href="/.well-known/agint/manifest.json">GET /.well-known/agint/manifest.json</a></li>
+    <li><code>POST https://unitconverter.jungchang02062004.workers.dev/v1/mcp/tools/call</code></li>
+  </ul>
+
+  <h2>Example Requests</h2>
+
+  <p><span class="badge">Length</span></p>
+  <pre>POST /v1/mcp/tools/call
+{ "tool": "convert_length", "arguments": { "value": 26.2, "from": "mi", "to": "km" } }</pre>
+
+  <p><span class="badge">Weight</span></p>
+  <pre>POST /v1/mcp/tools/call
+{ "tool": "convert_weight", "arguments": { "value": 180, "from": "lb", "to": "kg" } }</pre>
+
+  <p><span class="badge">Temperature</span></p>
+  <pre>POST /v1/mcp/tools/call
+{ "tool": "convert_temperature", "arguments": { "value": 100, "from": "celsius", "to": "fahrenheit" } }</pre>
+
+  <p><span class="badge">Currency</span></p>
+  <pre>POST /v1/mcp/tools/call
+{ "tool": "convert_currency", "arguments": { "value": 500, "from": "USD", "to": "EUR" } }</pre>
+
+  <p><span class="badge">Timezone</span></p>
+  <pre>POST /v1/mcp/tools/call
+{ "tool": "convert_timezone", "arguments": { "datetime": "2024-06-15T09:00:00", "from": "America/New_York", "to": "Asia/Tokyo" } }</pre>
+
+  <p><span class="badge">List Units</span></p>
+  <pre>POST /v1/mcp/tools/call
+{ "tool": "list_units", "arguments": { "category": "currency" } }</pre>
+</body>
+
+</html>

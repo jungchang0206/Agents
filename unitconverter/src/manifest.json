@@ -1,0 +1,165 @@
+{
+  "manifest_version": "1.0",
+  "display_name": "Unit Converter",
+  "description": "Convert between units of length, weight, temperature, currency (fixed rates), and time zones. No API key required.",
+  "mcp": {
+    "endpoint": "https://unitconverter.jungchang02062004.workers.dev/v1/mcp/tools/call",
+    "protocol_version": "1.0"
+  },
+  "tools": [
+    {
+      "name": "convert_length",
+      "description": "Convert a value between length units: mm, cm, m, km, in, ft, yd, mi, nmi.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "description": "The numeric value to convert."
+          },
+          "from": {
+            "type": "string",
+            "description": "Source unit (e.g. \"km\", \"ft\", \"mi\")."
+          },
+          "to": {
+            "type": "string",
+            "description": "Target unit (e.g. \"m\", \"in\", \"cm\")."
+          }
+        },
+        "required": [
+          "value",
+          "from",
+          "to"
+        ]
+      }
+    },
+    {
+      "name": "convert_weight",
+      "description": "Convert a value between weight units: mg, g, kg, t, oz, lb, st, short_ton.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "description": "The numeric value to convert."
+          },
+          "from": {
+            "type": "string",
+            "description": "Source unit (e.g. \"kg\", \"lb\", \"oz\")."
+          },
+          "to": {
+            "type": "string",
+            "description": "Target unit (e.g. \"g\", \"st\", \"t\")."
+          }
+        },
+        "required": [
+          "value",
+          "from",
+          "to"
+        ]
+      }
+    },
+    {
+      "name": "convert_temperature",
+      "description": "Convert between temperature scales: celsius, fahrenheit, kelvin, rankine.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "description": "The temperature value to convert."
+          },
+          "from": {
+            "type": "string",
+            "description": "Source scale (celsius | fahrenheit | kelvin | rankine)."
+          },
+          "to": {
+            "type": "string",
+            "description": "Target scale (celsius | fahrenheit | kelvin | rankine)."
+          }
+        },
+        "required": [
+          "value",
+          "from",
+          "to"
+        ]
+      }
+    },
+    {
+      "name": "convert_currency",
+      "description": "Convert between currencies using fixed reference rates. Supported: USD, EUR, GBP, JPY, CAD, AUD, CHF, CNY, INR, MXN, BRL, KRW, SGD, HKD, NOK, SEK, DKK, NZD, ZAR, AED.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "number",
+            "description": "The amount to convert."
+          },
+          "from": {
+            "type": "string",
+            "description": "Source currency code (e.g. \"USD\")."
+          },
+          "to": {
+            "type": "string",
+            "description": "Target currency code (e.g. \"EUR\")."
+          }
+        },
+        "required": [
+          "value",
+          "from",
+          "to"
+        ]
+      }
+    },
+    {
+      "name": "convert_timezone",
+      "description": "Convert a datetime string from one IANA timezone to another.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "datetime": {
+            "type": "string",
+            "description": "ISO 8601 datetime string, e.g. \"2024-06-15T14:30:00\"."
+          },
+          "from": {
+            "type": "string",
+            "description": "Source IANA timezone, e.g. \"America/New_York\"."
+          },
+          "to": {
+            "type": "string",
+            "description": "Target IANA timezone, e.g. \"Asia/Tokyo\"."
+          }
+        },
+        "required": [
+          "datetime",
+          "from",
+          "to"
+        ]
+      }
+    },
+    {
+      "name": "list_units",
+      "description": "List all supported units for a given category, or all categories if none specified.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "description": "Optional category filter: length | weight | temperature | currency | timezone."
+          }
+        },
+        "required": []
+      }
+    }
+  ],
+  "provenance": {
+    "publisher": "Unit Converter",
+    "publisher_type": "independent",
+    "upstream": [],
+    "verified_owner": false
+  },
+  "limits": {
+    "rate_limit_per_minute": 120
+  },
+  "agent": "unitconverter.jungchang02062004.workers.dev"
+}

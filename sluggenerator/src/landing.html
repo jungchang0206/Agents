@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Slug Generator Agent</title>
+  <meta charset="UTF-8">
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; line-height: 1.6; }
+    pre  { background: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    code { background: #f4f4f4; padding: 2px 5px; border-radius: 3px; }
+    h1   { color: #333; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+    .endpoint { background: #e8f4f8; padding: 10px; border-radius: 5px; margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h1>Slug Generator Agent</h1>
+  <p>This is an AGINT-compliant service that generates URL-friendly slugs from text.</p>
+
+  <h2>Features:</h2>
+  <ul>
+    <li>Generate clean, SEO-friendly slugs</li>
+    <li>Customizable separators (-, _, etc.)</li>
+    <li>Optional stopword removal</li>
+    <li>Maximum length constraints</li>
+    <li>Batch processing support</li>
+    <li>Accented character handling</li>
+  </ul>
+
+  <h2>Endpoints:</h2>
+  <div class="endpoint">
+    <strong><a href="/.well-known/agint/manifest.json">Capabilities Manifest</a></strong> — Service discovery endpoint<br>
+    <strong>POST /v1/mcp/tools/call</strong> — Call slug generator tools
+  </div>
+
+  <h2>Available Tools:</h2>
+
+  <h3>1. generate_slug</h3>
+  <p>Convert a single text to a slug:</p>
+  <pre>POST /v1/mcp/tools/call
+{
+  "tool": "generate_slug",
+  "arguments": {
+    "text": "Hello World! This is a test.",
+    "separator": "-",
+    "max_length": 30,
+    "lowercase": true,
+    "remove_stopwords": false
+  }
+}</pre>
+  <p>Response:</p>
+  <pre>{
+  "slug": "hello-world-this-is-a-test",
+  "original_text": "Hello World! This is a test.",
+  "metadata": {
+    "word_count": 6,
+    "original_length": 24,
+    "slug_length": 24,
+    "separator_used": "-",
+    "truncated": false
+  },
+  "source": "slug_generator"
+}</pre>
+
+  <h3>2. batch_generate_slugs</h3>
+  <p>Process multiple texts at once:</p>
+  <pre>POST /v1/mcp/tools/call
+{
+  "tool": "batch_generate_slugs",
+  "arguments": {
+    "texts": [
+      "Hello World!",
+      "Café &amp; Restaurant",
+      "Product Review 2024"
+    ],
+    "separator": "_"
+  }
+}</pre>
+
+  <h2>Example Transformations:</h2>
+  <ul>
+    <li><code>"Hello World!"</code> → <code>"hello-world"</code></li>
+    <li><code>"Café &amp; Restaurant"</code> → <code>"cafe-restaurant"</code></li>
+    <li><code>"The Quick Brown Fox"</code> (with stopwords) → <code>"quick-brown-fox"</code></li>
+    <li><code>"Product Review 2024"</code> → <code>"product-review-2024"</code></li>
+  </ul>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "name": "steep-recipe-a0dc",
+  "main": "src/index.js",
+  "workers_dev": true,
+  "preview_urls": true,
+  "compatibility_date": "2026-01-31",
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true
+    },
+    "traces": {
+      "enabled": false,
+      "persist": true,
+      "head_sampling_rate": 1
+    }
+  },
+  "services": [
+    {
+      "binding": "Agent_B",
+      "service": "steep-recipe-a0dc",
+      "environment": "production"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  }
+}

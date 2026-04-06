@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>News Briefer Agent</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+    pre  { background: #f4f4f4; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+    code { font-size: 0.875rem; }
+    h2   { margin-top: 2rem; }
+  </style>
+</head>
+<body>
+  <h1>📰 News Briefer Agent</h1>
+  <p>An AGINT-compliant news briefing service powered by <a href="https://newsapi.org/" target="_blank">NewsAPI.org</a>.</p>
+
+  <h2>Endpoints</h2>
+  <ul>
+    <li><a href="https://{{hostname}}/.well-known/agint/manifest.json">GET /.well-known/agint/manifest.json</a> — Capabilities manifest</li>
+    <li><code>POST https://{{hostname}}/v1/mcp/tools/call</code> — Invoke a tool</li>
+  </ul>
+
+  <h2>Tool: get_news_briefing</h2>
+  <pre><code>POST https://{{hostname}}/v1/mcp/tools/call
+Content-Type: application/json
+
+{
+  "tool": "get_news_briefing",
+  "arguments": {
+    "category": "technology",
+    "country": "us",
+    "count": 5
+  }
+}</code></pre>
+
+  <h2>Tool: get_news_briefing (keyword search)</h2>
+  <pre><code>POST https://{{hostname}}/v1/mcp/tools/call
+Content-Type: application/json
+
+{
+  "tool": "get_news_briefing",
+  "arguments": {
+    "query": "artificial intelligence",
+    "count": 3
+  }
+}</code></pre>
+
+  <h2>Tool: summarize_article</h2>
+  <pre><code>POST https://{{hostname}}/v1/mcp/tools/call
+Content-Type: application/json
+
+{
+  "tool": "summarize_article",
+  "arguments": {
+    "url": "https://example.com/some-news-article",
+    "max_sentences": 4
+  }
+}</code></pre>
+</body>
+</html>

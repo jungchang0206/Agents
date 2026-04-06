@@ -1,0 +1,107 @@
+{
+  "manifest_version": "1.0",
+  "display_name": "Slug Generator",
+  "description": "Generate URL-friendly slugs from text strings with multiple formatting options.",
+  "mcp": {
+    "endpoint": "https://sluggenerator.jungchang02062004.workers.dev/v1/mcp/tools/call",
+    "protocol_version": "1.0"
+  },
+  "tools": [
+    {
+      "name": "generate_slug",
+      "description": "Convert text into a URL-friendly slug with customizable options.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The text to convert into a slug"
+          },
+          "separator": {
+            "type": "string",
+            "description": "Character to use as word separator (default: '-')",
+            "default": "-"
+          },
+          "max_length": {
+            "type": "number",
+            "description": "Maximum length of the slug (optional)",
+            "minimum": 1
+          },
+          "lowercase": {
+            "type": "boolean",
+            "description": "Convert to lowercase (default: true)",
+            "default": true
+          },
+          "remove_stopwords": {
+            "type": "boolean",
+            "description": "Remove common stopwords (the, and, etc.)",
+            "default": false
+          }
+        },
+        "required": ["text"]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "slug":          { "type": "string", "description": "The generated URL-friendly slug" },
+          "original_text": { "type": "string" },
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "word_count":      { "type": "number" },
+              "original_length": { "type": "number" },
+              "slug_length":     { "type": "number" },
+              "separator_used":  { "type": "string" },
+              "truncated":       { "type": "boolean" }
+            }
+          },
+          "source": { "type": "string", "const": "slug_generator" }
+        }
+      }
+    },
+    {
+      "name": "batch_generate_slugs",
+      "description": "Generate multiple slugs from an array of text strings.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "texts": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Array of texts to convert to slugs"
+          },
+          "separator": { "type": "string", "default": "-" },
+          "lowercase":  { "type": "boolean", "default": true }
+        },
+        "required": ["texts"]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "slugs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "original": { "type": "string" },
+                "slug":     { "type": "string" }
+              }
+            }
+          },
+          "count":  { "type": "number" },
+          "source": { "type": "string", "const": "slug_generator" }
+        }
+      }
+    }
+  ],
+  "provenance": {
+    "publisher":      "Your Name",
+    "publisher_type": "independent",
+    "upstream":       [],
+    "verified_owner": false
+  },
+  "limits": {
+    "rate_limit_per_minute": 60
+  },
+  "agent": "sluggenerator.jungchang02062004.workers.dev"
+}

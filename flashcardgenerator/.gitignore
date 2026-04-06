@@ -1,0 +1,10 @@
+# Ignore everything in subfolders
+*/*
+
+# But allow src folders
+!*/src/
+!*/src/**
+
+# Keep important root files
+!README.md
+!.gitignore

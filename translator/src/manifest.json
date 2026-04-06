@@ -1,0 +1,106 @@
+{
+  "manifest_version": "1.0",
+  "display_name": "AI Translator & Summarizer",
+  "description": "Translate text, summarize content, or do both at once using AI.",
+  "mcp": {
+    "endpoint": "https://translator.jungchang02062004.workers.dev/v1/mcp/tools/call",
+    "protocol_version": "1.0"
+  },
+  "tools": [
+    {
+      "name": "translate_text",
+      "description": "Translate text from one language to another.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The text to translate"
+          },
+          "source_language": {
+            "type": "string",
+            "description": "Source language code (e.g., 'en', 'es', 'fr') or 'auto' to detect",
+            "default": "auto"
+          },
+          "target_language": {
+            "type": "string",
+            "description": "Target language code (e.g., 'en', 'es', 'fr', 'de', 'ja', 'zh')"
+          }
+        },
+        "required": ["text", "target_language"]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "translated_text": { "type": "string" },
+          "source_language": { "type": "string" },
+          "target_language": { "type": "string" },
+          "source": { "type": "string", "const": "ai_translator" }
+        }
+      }
+    },
+    {
+      "name": "summarize_text",
+      "description": "Generate a concise summary of the provided text.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string", "description": "The text to summarize" },
+          "length": {
+            "type": "string",
+            "description": "Desired summary length",
+            "enum": ["short", "medium", "long"],
+            "default": "medium"
+          }
+        },
+        "required": ["text"]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "summary":         { "type": "string" },
+          "original_length": { "type": "number" },
+          "summary_length":  { "type": "number" },
+          "source": { "type": "string", "const": "ai_summarizer" }
+        }
+      }
+    },
+    {
+      "name": "translate_and_summarize",
+      "description": "Translate text to another language AND provide a summary.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string", "description": "The text to translate and summarize" },
+          "target_language": { "type": "string", "description": "Target language code" },
+          "summary_length": {
+            "type": "string",
+            "description": "Desired summary length",
+            "enum": ["short", "medium", "long"],
+            "default": "medium"
+          }
+        },
+        "required": ["text", "target_language"]
+      },
+      "output_schema": {
+        "type": "object",
+        "properties": {
+          "translated_text": { "type": "string" },
+          "summary":         { "type": "string" },
+          "target_language": { "type": "string" },
+          "source": { "type": "string", "const": "ai_translator_summarizer" }
+        }
+      }
+    }
+  ],
+  "provenance": {
+    "publisher":      "Jung Chang",
+    "publisher_type": "independent",
+    "upstream":       ["Cloudflare Workers AI"],
+    "verified_owner": false
+  },
+  "limits": {
+    "rate_limit_per_minute": 60
+  },
+  "agent": "translator.jungchang02062004.workers.dev"
+}
