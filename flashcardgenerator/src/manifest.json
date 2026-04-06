@@ -1,0 +1,70 @@
+{
+  "manifest_version": "1.0",
+  "display_name": "Flashcard Generator",
+  "description": "Turn study notes into flashcards, multiple-choice quizzes, and simplified cards using on-device AI. No external API key required.",
+  "mcp": {
+    "endpoint": "https://flashcardgenerator.jungchang02062004.workers.dev/v1/mcp/tools/call",
+    "protocol_version": "1.0"
+  },
+  "tools": [
+    {
+      "name": "generate_flashcards",
+      "description": "Generate Q&A flashcard pairs from study notes or any block of text.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "text":       { "type": "string", "description": "Study notes or text to generate flashcards from." },
+          "count":      { "type": "number", "description": "Number of flashcards to generate (1–20). Default: 5." },
+          "difficulty": { "type": "string", "description": "Card difficulty: easy | medium | hard. Default: medium." },
+          "subject":    { "type": "string", "description": "Optional subject hint (e.g. 'Biology', 'World War II')." }
+        },
+        "required": ["text"]
+      }
+    },
+    {
+      "name": "generate_quiz",
+      "description": "Convert an array of flashcards into a multiple-choice quiz with 4 options and explanations.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "flashcards": {
+            "type": "array",
+            "description": "Array of {question, answer} flashcard objects.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "question": { "type": "string" },
+                "answer":   { "type": "string" }
+              }
+            }
+          },
+          "count": { "type": "number", "description": "Number of quiz questions to generate. Default: 5." }
+        },
+        "required": ["flashcards"]
+      }
+    },
+    {
+      "name": "simplify_card",
+      "description": "Rewrite a single flashcard in simpler language for a beginner or intermediate audience.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "question": { "type": "string", "description": "The flashcard question." },
+          "answer":   { "type": "string", "description": "The flashcard answer." },
+          "level":    { "type": "string", "description": "Target level: beginner | intermediate. Default: beginner." }
+        },
+        "required": ["question", "answer"]
+      }
+    }
+  ],
+  "provenance": {
+    "publisher":      "Flashcard Generator",
+    "publisher_type": "independent",
+    "upstream":       ["Cloudflare Workers AI", "@cf/meta/llama-3.1-8b-instruct"],
+    "verified_owner": false
+  },
+  "limits": {
+    "rate_limit_per_minute": 20
+  },
+  "agent": "flashcardgenerator.jungchang02062004.workers.dev"
+}
